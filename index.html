@@ -1,0 +1,138 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Unix Time Converter</title>
+<style>
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
+  background-color: #1a1a1a;
+  color: #d4d4d4;
+}
+
+#unixTimeDisplay {
+  font-size: 2.5em;
+  background-color: #252525;
+  padding: 18px 35px;
+  border-radius: 10px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+#timeDisplay {
+  font-size: 1.8em;
+  margin-bottom: 30px;
+}
+
+#divider {
+  width: 80%;
+  height: 2px;
+  background-color: #333;
+  margin: 45px 0;
+}
+
+#converter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
+}
+
+#unixInput {
+  background-color: #333;
+  color: #d4d4d4;
+  border: 1px solid #444;
+  padding: 14px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  font-size: 1.3em;
+  width: 60%;
+  box-sizing: border-box;
+}
+
+#convertedTime {
+  font-size: 1.5em;
+  padding: 14px 25px;
+  width: 60%;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+button {
+  background-color: #5c6bc0;
+  border: none;
+  color: white;
+  padding: 14px 30px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 1.3em;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+button:hover {
+  background-color: #3f51b5;
+}
+
+.h2-converter, .h2-realtime {
+  font-size: 1.8em;
+  margin-bottom: 20px;
+  color: #bdbdbd;
+}
+</style>
+</head>
+<body>
+
+<h2 class="h2-realtime">Real-Time Unix/UTC</h2>
+<div id="unixTimeDisplay"></div>
+<div id="timeDisplay"></div>
+
+<div id="divider"></div>
+
+<h2 class="h2-converter">Unix to UTC Converter</h2>
+<div id="converter">
+  <input type="number" id="unixInput" placeholder="Enter Unix Time">
+  <button onclick="convertUnix()">Convert</button>
+  <div id="convertedTime"></div>
+</div>
+
+<script>
+function updateTime() {
+  const now = new Date();
+  const utcTime = now.toUTCString();
+  const unixTime = Math.floor(now.getTime() / 1000);
+
+  document.getElementById('unixTimeDisplay').textContent = "Unix Time: " + unixTime;
+  document.getElementById('timeDisplay').textContent = "UTC Time: " + utcTime;
+}
+
+updateTime();
+setInterval(updateTime, 1000);
+
+function convertUnix() {
+  const unixInputValue = document.getElementById('unixInput').value;
+  if (unixInputValue) {
+    const date = new Date(unixInputValue * 1000);
+    const convertedTime = date.toUTCString();
+    document.getElementById('convertedTime').style.backgroundColor = '#333';
+    document.getElementById('convertedTime').textContent = "Converted Time: " + convertedTime;
+  } else {
+    document.getElementById('convertedTime').style.backgroundColor = '';
+    document.getElementById('convertedTime').textContent = "Please enter a Unix timestamp.";
+  }
+}
+
+document.getElementById('convertedTime').style.backgroundColor = '';
+</script>
+
+</body>
+</html>
